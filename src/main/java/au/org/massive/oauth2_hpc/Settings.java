@@ -183,20 +183,20 @@ public class Settings {
 		config.setExpressionEngine(new XPathExpressionEngine());
 		config.load();
 		
-		Set<RegisteredClient> registeredClients = new HashSet<RegisteredClient>();
+		Set<RegisteredClient> registeredClients = new HashSet<>();
 		
 		for (HierarchicalConfiguration clientConfiguration : config.configurationsAt("client")) {
 			String clientName = clientConfiguration.getString("name");
 			String clientId = clientConfiguration.getString("client-id");
 			String clientSecret = clientConfiguration.getString("client-secret");
 			
-			Set<String> allowedGrantTypes = new HashSet<String>();
+			Set<String> allowedGrantTypes = new HashSet<>();
 			SubnodeConfiguration grants = clientConfiguration.configurationAt("allowed-grant-types");
 			for (Object o : grants.getList("grant")) {
 				allowedGrantTypes.add((String) o);
 			}
 			
-			Set<String> allowedRedirects = new HashSet<String>();
+			Set<String> allowedRedirects = new HashSet<>();
 			SubnodeConfiguration redirects = clientConfiguration.configurationAt("allowed-redirects");
 			for (Object o : redirects.getList("url")) {
 				allowedRedirects.add((String) o);

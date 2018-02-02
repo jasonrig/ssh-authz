@@ -216,7 +216,7 @@ public class SSHCertificateGenerator {
 	
 	private static <T extends SSHOptions> void writeValue(Map<T,String> options, DataOutputStream out) throws IOException {
 		// Ensure that options are in lexical order
-		TreeMap<T,String> sortedOpts = new TreeMap<T,String>(new SSHOptionsComparator());
+		TreeMap<T,String> sortedOpts = new TreeMap<>(new SSHOptionsComparator());
 		sortedOpts.putAll(options);
 		
 		String[] data = new String[sortedOpts.size() * 2];
@@ -232,7 +232,7 @@ public class SSHCertificateGenerator {
 	
 	private static <T extends SSHOptions> void writeValue(Collection<T> options, DataOutputStream out) throws IOException {
 		// Ensure that options are in lexical order
-		Map<T,String> map = new TreeMap<T,String>(new SSHOptionsComparator());
+		Map<T,String> map = new TreeMap<>(new SSHOptionsComparator());
 		for (T option : options) {
 			map.put(option, "");
 		}

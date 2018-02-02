@@ -52,8 +52,7 @@ public class OAuthResourceServer extends ResourceServerConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(ResourceServerSecurityConfigurer resources)
-			throws Exception {
+	public void configure(ResourceServerSecurityConfigurer resources) {
 		resources.authenticationManager(authenticationManager())
 			.tokenServices(defaultTokenServices())
 			.resourceId(RESOURCE_ID);

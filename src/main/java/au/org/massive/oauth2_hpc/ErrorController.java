@@ -18,7 +18,7 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
 
     @RequestMapping(value = PATH)
     public ModelAndView error(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,Object> model = new HashMap<String,Object>();
+        Map<String,Object> model = new HashMap<>();
         if (response.getStatus() == 403) {
             return new ModelAndView("login_error", model);
         } else {

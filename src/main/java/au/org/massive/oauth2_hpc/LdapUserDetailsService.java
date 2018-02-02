@@ -46,7 +46,7 @@ public class LdapUserDetailsService implements UserDetailsService {
 		}
 		try {
 			// Set up the environment for creating the initial context
-			Hashtable<String, String> env = new Hashtable<String, String>();
+			Hashtable<String, String> env = new Hashtable<>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, settings.getLdapProviderUrl());
 
@@ -88,7 +88,7 @@ public class LdapUserDetailsService implements UserDetailsService {
 	 */
 	private UserDetails createUserObject(SearchResult massiveLdapSearchResult, String email) throws NamingException {
 		String userId = (String) massiveLdapSearchResult.getAttributes().get("uid").get();
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return new UserDetailsImpl(userId, "password", email, authorities);
 	}

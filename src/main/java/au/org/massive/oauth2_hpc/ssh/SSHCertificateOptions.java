@@ -109,11 +109,11 @@ public class SSHCertificateOptions {
 			serial = 0;
 			keyId = "";
 			type = SSHCertType.SSH_CERT_TYPE_USER;
-			principals = new LinkedList<String>();
+			principals = new LinkedList<>();
 			validBefore = 0;
 			validAfter = 0;
-			criticalOpts = new HashMap<SSHCriticalOptions, String>();
-			extensions = new HashSet<SSHExtensions>();
+			criticalOpts = new HashMap<>();
+			extensions = new HashSet<>();
 		}
 		
 		public SSHCertificateOptions build() {
@@ -198,8 +198,8 @@ public class SSHCertificateOptions {
 		 * Sets the standard {@link SSHExtensions}
 		 */
 		public Builder setDefaultOptions() {
-			criticalOpts = new HashMap<SSHCriticalOptions,String>();
-			extensions = new HashSet<SSHExtensions>(Arrays.asList(
+			criticalOpts = new HashMap<>();
+			extensions = new HashSet<>(Arrays.asList(
 					SSHExtensions.PERMIT_X11_FORWARDING,
 					SSHExtensions.PERMIT_AGENT_FORWARDING,
 					SSHExtensions.PERMIT_PORT_FORWARDING,

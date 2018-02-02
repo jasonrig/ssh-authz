@@ -49,7 +49,7 @@ public class KeyAuthEndpoints {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public String authorizeKey(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
-			Map<String,String> responseMessage = new HashMap<String,String>();
+			Map<String,String> responseMessage = new HashMap<>();
 			String remoteHPCUser = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 			try {

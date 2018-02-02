@@ -46,8 +46,7 @@ public class OAuthServer extends AuthorizationServerConfigurerAdapter {
 	private ClientDetailsService clientDetailsService;
 
 	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-			throws Exception {
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints
 		.tokenServices(defaultTokenServices())
 		.authenticationManager(authenticationManager);
@@ -64,21 +63,14 @@ public class OAuthServer extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public TokenEnhancerChain tokenEnhancerChain() {
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-		List<TokenEnhancer> tokenEnhancers = new LinkedList<TokenEnhancer>();
-		tokenEnhancers.add(new TokenEnhancer() {
-
-			@Override
-			public OAuth2AccessToken enhance(OAuth2AccessToken token,
-											 OAuth2Authentication auth) {
-				UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-				Map<String, Object> additionalInformation = new HashMap<String, Object>();
-				additionalInformation.putAll(token.getAdditionalInformation());
-				additionalInformation.put("email", userDetails.getEmail());
-				((DefaultOAuth2AccessToken) token).setAdditionalInformation(additionalInformation);
-				return token;
-			}
-
-		});
+		List<TokenEnhancer> tokenEnhancers = new LinkedList<>();
+		tokenEnhancers.add((token, auth) -> {
+            UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+Map<String, Object> additionalInformation = new HashMap<>(token.getAdditionalInformation());
+            additionalInformation.put("email", userDetails.getEmail());
+            ((DefaultOAuth2AccessToken) token).setAdditionalInformation(additionalInformation);
+            return token;
+        });
 		tokenEnhancers.add(jwtAccessTokenConverter());
 		tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
 		return tokenEnhancerChain;
@@ -98,8 +90,7 @@ public class OAuthServer extends AuthorizationServerConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security)
-			throws Exception {
+	public void configure(AuthorizationServerSecurityConfigurer security) {
 		security.checkTokenAccess("permitAll()");
 	}
 

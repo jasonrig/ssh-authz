@@ -49,13 +49,17 @@ public class RSAPublicKeyCodec extends KeyCodec {
 	public static RSAPublicKey decodeKeyFromSSHBase64Format(byte[] base64Key) throws InvalidKeyException {
 		ByteArrayInputStream buf = new ByteArrayInputStream(Base64.decode(base64Key));
 		DataInputStream in = new DataInputStream(buf);
-		ArrayList<byte[]> fieldList = new ArrayList<byte[]>(3);
+		ArrayList<byte[]> fieldList = new ArrayList<>(3);
 		try {
 			try {
+				//noinspection InfiniteLoopStatement
 				while (true) {
 					int fieldLength = in.readInt();
 					byte[] fieldData = new byte[fieldLength];
-					in.read(fieldData);
+					int bytesRead = in.read(fieldData);
+					if (bytesRead != fieldLength) {
+						throw new InvalidKeyException();
+					}
 					fieldList.add(fieldData);
 				}
 			} catch (EOFException e) {

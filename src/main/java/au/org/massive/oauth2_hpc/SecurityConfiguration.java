@@ -26,16 +26,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		super();
 
 		UserDetailsService userDetailsService = new LdapUserDetailsService();
-        UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken>(
-				userDetailsService);
+        UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>(
+                userDetailsService);
 
         preAuthenticatedProvider = new PreAuthenticatedAuthenticationProvider();
         preAuthenticatedProvider.setPreAuthenticatedUserDetailsService(wrapper);
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) {
 		auth.authenticationProvider(preAuthenticatedProvider);
 	}
 
